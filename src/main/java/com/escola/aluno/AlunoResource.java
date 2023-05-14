@@ -34,7 +34,7 @@ public class AlunoResource {
         return Response.ok(aluno).build();
     }
 
-    @PUT
+/*    @PUT
     @Path("/{id}")
     @Transactional
     public Response alterar(@PathParam("id")Long id, Aluno atualizacao) {
@@ -47,7 +47,7 @@ public class AlunoResource {
         aluno.nota = atualizacao.nota;
         aluno.persist();
         return Response.ok(aluno).build();
-    }
+    }*/
 
     @PUT
     @Path("/{matricula}")
@@ -59,7 +59,6 @@ public class AlunoResource {
         }
         aluno.matricula = "a" + atualizacao.matricula;
         aluno.nome = atualizacao.nome;
-        aluno.nota = atualizacao.nota;
         aluno.persist();
         return Response.ok(aluno).build();
     }
