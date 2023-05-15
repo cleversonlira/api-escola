@@ -57,7 +57,7 @@ public class AlunoResource {
         if (aluno == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        aluno.matricula = "a" + atualizacao.matricula;
+        aluno.matricula = atualizacao.matricula;
         aluno.nome = atualizacao.nome;
         aluno.persist();
         return Response.ok(aluno).build();

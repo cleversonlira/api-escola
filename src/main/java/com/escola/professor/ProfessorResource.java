@@ -55,7 +55,6 @@ public class ProfessorResource {
         }
         professor.disciplina = atualizacao.disciplina;
         professor.matricula = atualizacao.matricula;
-        professor.matricula = "p" + atualizacao.matricula;
         professor.nome = atualizacao.nome;
         professor.persist();
         return Response.ok(professor).build();
