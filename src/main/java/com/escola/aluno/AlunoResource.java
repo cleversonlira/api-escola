@@ -1,11 +1,13 @@
 package com.escola.aluno;
 
-import com.escola.professor.Professor;
+import com.escola.atividade.Atividade;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Path("/api/alunos")
@@ -34,25 +36,10 @@ public class AlunoResource {
         return Response.ok(aluno).build();
     }
 
-/*    @PUT
-    @Path("/{id}")
-    @Transactional
-    public Response alterar(@PathParam("id")Long id, Aluno atualizacao) {
-        Aluno aluno = Aluno.findById(id);
-        if (aluno == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        aluno.matricula = "a" + atualizacao.matricula;
-        aluno.nome = atualizacao.nome;
-        aluno.nota = atualizacao.nota;
-        aluno.persist();
-        return Response.ok(aluno).build();
-    }*/
-
     @PUT
     @Path("/{matricula}")
     @Transactional
-    public Response alterar(@PathParam("matricula")String matricula, Aluno atualizacao) {
+    public Response alterar(@PathParam("matricula") String matricula, Aluno atualizacao) {
         Aluno aluno = Aluno.find("matricula", matricula).firstResult();
         if (aluno == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -69,6 +56,22 @@ public class AlunoResource {
     public Response remover(@PathParam("id") Long id) {
         Aluno.deleteById(id);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/{id}/media")
+    @Transactional
+    public Response obterMediaDasAtividades(@PathParam("id") Long id) {
+        List<Atividade> atividadesDoAluno = Atividade.list("aluno_id", id);
+        BigDecimal notasSomadas = atividadesDoAluno.stream()
+                .map(Atividade::getNota)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal media = BigDecimal.ZERO;
+        if (notasSomadas.compareTo(BigDecimal.ZERO) > 0) {
+            media = notasSomadas
+                    .divide(BigDecimal.valueOf(atividadesDoAluno.size()), 2, RoundingMode.HALF_EVEN);
+        }
+        return Response.ok(media).build();
     }
 
 }

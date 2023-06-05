@@ -17,4 +17,8 @@ public class Atividade extends PanacheEntityBase {
     public BigDecimal nota;
     @OneToOne
     public Aluno aluno;
+
+    public BigDecimal getNota() {
+        return nota;
+    }
 }
