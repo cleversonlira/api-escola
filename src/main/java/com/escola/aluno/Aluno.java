@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "aluno")
-public class Aluno  extends PanacheEntityBase {
+public class Aluno  extends Atividade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
