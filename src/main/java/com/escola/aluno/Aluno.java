@@ -1,7 +1,6 @@
 package com.escola.aluno;
 
 
-import com.escola.atividade.Atividade;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
